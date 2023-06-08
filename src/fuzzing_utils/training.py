@@ -1,13 +1,14 @@
 from sklearn.model_selection import train_test_split
 import pandas as pd
 
-import constants
+from . import constants
+
+IRIS_DATASET_URL = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
+IRIS_FLOWER_NAMES = names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
 
 
 def get_default_dataset() -> pd.DataFrame:
-    url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
-    names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
-    return pd.read_csv(url, names=names)
+    return pd.read_csv(IRIS_DATASET_URL, names=IRIS_FLOWER_NAMES)
 
 
 def extract_xy_train(dataset: pd.DataFrame, test_size: int = 0.20, random_state=constants.FIXED_RANDOM_VALUE) \
