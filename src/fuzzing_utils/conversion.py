@@ -60,24 +60,31 @@ class Reserved:
 
 
 def to_reserved_or_else(value: int | np.int64, reserved: Dict[int | np.int64, any] | Callable[[int | np.int64], any],
-                        else_function: Callable[[int | np.int64], any]) -> any:
+                        else_function: Callable[[int | np.int64], any],
+                        shift_function: Callable[[int | np.int64], int | np.int64] | None = None) -> any:
     """
     Takes a value and returns a reserved value or the else_function
 
-    Args:
-        value (int | np.int64): The value to check
-        reserved (dict[int | np.int64, any] | callable[[int | np.int64], any]): A dictionary of reserved values or a
-        function which takes a value, and either returns its replacement or Reserved type
-        else_function (callable[[int | np.int64], any]): A function which takes a value and returns its replacement
+    Args: :param value: (int | np.int64) The value to check :param reserved: (dict[int | np.int64, any] | callable[[
+    int | np.int64], any]): A dictionary of reserved values or a function which takes a value and returns its
+    replacement :param else_function: (callable[[int | np.int64], any]): A function which takes a value and returns
+    its replacement :param shift_function: (callable[[int | np.int64], int | np.int64] | None): A function which
+    takes a value and returns its replacement, used to shift the value if it is not reserved
     """
     if type(reserved) is dict:
         if value in reserved:
             return reserved[value]
         else:
+            if shift_function is not None:
+                value = shift_function(value)
+
             return else_function(value)
     else:
         reserved_value = reserved(value)
         if reserved_value != Reserved:
             return reserved_value
         else:
+            if shift_function is not None:
+                value = shift_function(value)
+
             return else_function(value)
