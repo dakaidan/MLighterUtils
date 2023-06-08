@@ -6,7 +6,7 @@ import numpy as np
 
 
 def to_float(value: int | np.int64) -> float:
-    """Converts an int or np.int64 to a float value"""
+    """Converts an int or np.int64 to a float value, if nan or inf, returns 0.0"""
     packed = struct.pack('>q', value)
     unpacked = struct.unpack('>d', packed)[0]
 
