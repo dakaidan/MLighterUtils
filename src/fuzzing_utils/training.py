@@ -3,7 +3,8 @@ import pandas as pd
 
 from . import constants
 
-IRIS_DATASET_URL = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
+# Default data set for testing
+IRIS_DATASET_URL = constants.PATH_TO_DATASETS + "iris.csv"
 IRIS_FLOWER_NAMES = names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
 
 
