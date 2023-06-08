@@ -7,7 +7,13 @@ import numpy as np
 
 def to_float(value: int | np.int64) -> float:
     """Converts an int or np.int64 to a float value"""
-    return struct.unpack('!f', struct.pack('!I', value))[0]
+    packed = struct.pack('>q', value)
+    unpacked = struct.unpack('>d', packed)[0]
+
+    if math.isnan(unpacked) or math.isinf(unpacked):
+        return 0.0
+    else:
+        return unpacked
 
 
 def to_fraction(value: int | np.int64) -> float:
@@ -49,13 +55,13 @@ def to_greater_than_or_none(value: int | np.int64, min_value: int) -> int | None
 def to_positive_integer_or_fraction(value: int | np.int64) -> int | float:
     """Converts an int or np.int64 to a positive int or fraction"""
     if value <= 0:
-        return to_fraction(value)
+        return to_fraction(abs(value))
     else:
         return value
 
 
-class Reserved:
-    """A reserved type"""
+class NotReserved:
+    """A not reserved type"""
     pass
 
 
@@ -81,7 +87,7 @@ def to_reserved_or_else(value: int | np.int64, reserved: Dict[int | np.int64, an
             return else_function(value)
     else:
         reserved_value = reserved(value)
-        if reserved_value != Reserved:
+        if reserved_value != NotReserved:
             return reserved_value
         else:
             if shift_function is not None:
