@@ -18,8 +18,8 @@ def exit_fuzz() -> None:
     os._exit(0)
 
 
-def save_input(byte_arr: np.ndarray | List, file_name: str) -> None:
-    """Saves a binary array (or list which will be converted using an np.int64 encoding) to a file,
+def save_input(byte_arr: np.ndarray | List[any], file_name: str) -> None:
+    """Saves a binary array (or list which will be converted using a np.int64 encoding) to a file,
     with the extension .npy, then exits"""
     if isinstance(byte_arr, list):
         byte_arr = np.array(byte_arr, dtype=np.int64)
