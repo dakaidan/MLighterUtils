@@ -28,12 +28,16 @@ class TestConversion:
         assert to_positive(9932) == 9932
         assert to_positive(-1) == 1
         assert to_positive(-665 * 10 ** 15) == 665 * 10 ** 15
+        assert to_positive(0.5) == 0.5
+        assert to_positive(-0.5) == 0.5
 
     def test_to_positive_or_none(self):
         assert to_positive_or_none(0) is None
         assert to_positive_or_none(9932) == 9932
         assert to_positive_or_none(-1) is None
         assert to_positive_or_none(-665 * 10 ** 15) is None
+        assert to_positive_or_none(0.5) == 0.5
+        assert to_positive_or_none(-0.5) is None
 
     def test_to_greater_than(self):
         assert to_greater_than(0, 0) == 0

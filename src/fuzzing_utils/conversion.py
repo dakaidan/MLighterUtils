@@ -31,13 +31,13 @@ def to_fraction(value: int | np.int64) -> float:
     return math.modf(to_float(value))[0]
 
 
-def to_positive(value: int | np.int64) -> int:
-    """Converts an int or np.int64 to a positive int"""
+def to_positive(value: int | np.int64 | float) -> int:
+    """Converts an int, np.int64, or float to a positive int or float"""
     return abs(value)
 
 
-def to_positive_or_none(value: int | np.int64) -> int | None:
-    """Positive int or None"""
+def to_positive_or_none(value: int | np.int64 | float) -> int | None:
+    """Converts an int, np.int64, or float to a positive int or float"""
     if value <= 0:
         return None
     else:
