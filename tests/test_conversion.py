@@ -1,8 +1,14 @@
 from src.fuzzing_utils.conversion import to_float, to_fraction, to_positive, to_positive_or_none, to_greater_than, \
-    to_greater_than_or_none, to_positive_integer_or_fraction, to_reserved_or_else, NotReserved
+    to_greater_than_or_none, to_positive_integer_or_fraction, to_reserved_or_else, NotReserved, select_from
 
 
 class TestConversion:
+    def test_select_from(self):
+        assert select_from(0, [1, 2, 3]) == 1
+        assert select_from(1, [1, 2, 3]) == 2
+        assert select_from(2, [1, 2, 3]) == 3
+        assert select_from(3, [1, 2, 3]) == 1
+
     def test_to_float(self):
         assert to_float(0) == 0.0
         assert to_float(9932) == 4.907e-320

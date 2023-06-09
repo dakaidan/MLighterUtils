@@ -5,6 +5,11 @@ from typing import Callable, Dict
 import numpy as np
 
 
+def select_from(value: int | np.int64, options: list[any]) -> any:
+    """Selects a value from a list of options"""
+    return options[value % len(options)]
+
+
 def to_float(value: int | np.int64) -> float:
     """Converts an int or np.int64 to a float value, if nan or inf, returns 0.0"""
     packed = struct.pack('>q', value)
