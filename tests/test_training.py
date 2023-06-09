@@ -1,4 +1,4 @@
-from src.fuzzing_utils.training import get_default_dataset, extract_xy_train
+from src.mlighter_utils.training import get_default_dataset, extract_xy_train
 
 
 class TestTraining:

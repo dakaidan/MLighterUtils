@@ -1,4 +1,4 @@
-from src.fuzzing_utils.conversion import to_float, to_fraction, to_positive, to_positive_or_none, to_greater_than, \
+from src.mlighter_utils.conversion import to_float, to_fraction, to_positive, to_positive_or_none, to_greater_than, \
     to_greater_than_or_none, to_positive_integer_or_fraction, to_reserved_or_else, NotReserved, select_from
 
 
