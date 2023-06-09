@@ -1,5 +1,6 @@
 from src.mlighter_utils.conversion import to_float, to_fraction, to_positive, to_positive_or_none, to_greater_than, \
-    to_greater_than_or_none, to_positive_integer_or_fraction, to_reserved_or_else, NotReserved, select_from
+    to_greater_than_or_none, to_positive_integer_or_fraction, to_reserved_or_else, NotReserved, select_from, to_bool, \
+    select_function
 
 
 class TestConversion:
@@ -8,6 +9,12 @@ class TestConversion:
         assert select_from(1, [1, 2, 3]) == 2
         assert select_from(2, [1, 2, 3]) == 3
         assert select_from(3, [1, 2, 3]) == 1
+
+    def test_to_bool(self):
+        assert to_bool(0) is False
+        assert to_bool(1) is True
+        assert to_bool(2) is False
+        assert to_bool(-1) is True
 
     def test_to_float(self):
         assert to_float(0) == 0.0
@@ -95,3 +102,10 @@ class TestConversion:
 
         assert to_reserved_or_else(0, reserved_values, to_positive, shift) == 'zero'
         assert to_reserved_or_else(3, reserved_values, to_positive, shift) == 0
+
+    def test_select_function(self):
+        assert select_function(0, lambda x: x % 2, lambda x: x + 1, lambda x: x + 2) == 1
+        assert select_function(1, lambda x: x % 2, lambda x: x + 1, lambda x: x + 2) == 3
+        assert select_function(2, lambda x: x % 2, lambda x: x + 1, lambda x: x + 2) == 3
+        assert select_function(2, lambda x: x % 2 == 0, lambda x: x + 1, lambda x: x + 2) == 4
+        assert select_function(2, lambda x: x % 2 != 0, lambda x: x + 1, lambda x: x + 2) == 3

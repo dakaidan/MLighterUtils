@@ -1,13 +1,21 @@
 import struct
 import math
-from typing import Callable, Dict
+from typing import Callable, Dict, List
 
 import numpy as np
+
+
+# TODO: bool, conditionally choose between functions to apply
 
 
 def select_from(value: int | np.int64, options: list[any]) -> any:
     """Selects a value from a list of options"""
     return options[value % len(options)]
+
+
+def to_bool(value: int | np.int64) -> bool:
+    """Converts an int or np.int64 to a bool"""
+    return bool(value % 2)
 
 
 def to_float(value: int | np.int64) -> float:
@@ -99,3 +107,14 @@ def to_reserved_or_else(value: int | np.int64, reserved: Dict[int | np.int64, an
                 value = shift_function(value)
 
             return else_function(value)
+
+
+def select_function(value: int | np.int64, selection_function: Callable[[int | np.int64], int | bool],
+                    *options: Callable[[int | np.int64], any]) -> any:
+    """Selects a function to apply to a value based on a selection function which returns an index into the options"""
+    selection = selection_function(value)
+
+    if type(selection) is bool:
+        selection = int(selection)
+
+    return options[selection % len(options)](value)
