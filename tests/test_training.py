@@ -1,4 +1,4 @@
-from src.mlighter_utils.training import get_default_dataset, extract_xy_train
+from src.mlighter_utils.training import get_default_dataset, extract_xy_train, LoadDataOptions
 
 
 class TestTraining:
@@ -6,6 +6,11 @@ class TestTraining:
         df = get_default_dataset()
         assert df is not None
         assert df.iloc[137].tolist() == [6.4, 3.1, 5.5, 1.8, 'Iris-virginica']
+
+    def test_get_default_dataset_with_numeric_labels(self):
+        df = get_default_dataset(LoadDataOptions.WITH_NUMERIC)
+        assert df is not None
+        assert df.iloc[137].tolist() == [6.4, 3.1, 5.5, 1.8, 2]
 
     def test_extract_xy_train(self):
         x_train, y_train = extract_xy_train(get_default_dataset())
